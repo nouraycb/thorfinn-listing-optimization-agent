@@ -2,11 +2,21 @@ import os
 from dotenv import load_dotenv
 from openai import OpenAI
 
-# Load environment variables (including OPENAI_API_KEY from .env)
+# Load environment variables from .env (useful locally)
 load_dotenv()
 
+# Read the API key from environment
+api_key = os.getenv("OPENAI_API_KEY")
+
+# Debug print so we can see in Render logs whether it's set (but not print the key itself)
+print("DEBUG: OPENAI_API_KEY is", "SET" if api_key else "NOT SET", flush=True)
+
+if not api_key:
+    # This will give a VERY clear message in Render logs
+    raise Exception("OPENAI_API_KEY is missing or empty. Check the Environment tab in Render.")
+
 # Initialize OpenAI client using your API key
-client = OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+client = OpenAI(api_key=api_key)
 
 # System prompt = the "brain" of your optimization agent
 SYSTEM_PROMPT = """
