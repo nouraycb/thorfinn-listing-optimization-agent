@@ -183,7 +183,7 @@ css = """
 # ------------ UI LAYOUT (Blocks) ------------
 # CHANGE #1: attach theme and css to Blocks instead of launch
 with gr.Blocks(
-    title="Amazon Listing Optimization Agent",
+    title="NOUR's Amazon Listing Optimization Agent | Rufus-Friendly",
     theme=theme,      # ✅ moved here
     css=css,          # ✅ moved here
 ) as demo:
@@ -191,7 +191,7 @@ with gr.Blocks(
     with gr.Column(elem_id="main-header"):
         gr.Markdown(
             """
-<h1>🧠 Amazon Listing Optimization Agent</h1>
+<h1>🧠 NOUR's Amazon Listing Optimization Agent | Rufus-Friendly </h1>
 <p>Audit & rewrite Amazon listings using <b>OpenAI + Keepa</b>, with support for manual input and batch ASIN/URL runs.</p>
 """
         )
