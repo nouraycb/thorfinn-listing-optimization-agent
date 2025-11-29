@@ -355,10 +355,10 @@ with gr.Blocks(
 if __name__ == "__main__":
     # Render sets a PORT environment variable; default to 7860 for local runs
     port = int(os.getenv("PORT", "7860"))
-    # CHANGE #2: remove theme and css from launch (Blocks.launch in 4.44.0 doesn't accept theme)
+
     demo.launch(
         server_name="0.0.0.0",
         server_port=port,
-        # theme=theme,  # ❌ removed
-        # css=css,      # ❌ removed
+        share=True,       # needed on Render so Gradio doesn't complain about localhost
+        show_api=False,   # disables the buggy API schema endpoint that was throwing errors
     )
