@@ -183,7 +183,7 @@ css = """
 # ------------ UI LAYOUT (Blocks) ------------
 # CHANGE #1: attach theme and css to Blocks instead of launch
 with gr.Blocks(
-    title="NOUR's Amazon Listing Optimization Agent | Rufus-Friendly",
+    title="THORFINN",
     theme=theme,      # ✅ moved here
     css=css,          # ✅ moved here
 ) as demo:
@@ -191,8 +191,8 @@ with gr.Blocks(
     with gr.Column(elem_id="main-header"):
         gr.Markdown(
             """
-<h1>🧠 NOUR's Amazon Listing Optimization Agent | Rufus-Friendly! </h1>
-<p>Audit & rewrite Amazon listings using <b>OpenAI + Keepa</b>, with support for manual input and batch ASIN/URL runs.</p>
+<h1>🧠 I am a a 1,000-year-old Viking reborn as an Amazon listing optimization general | Rufus-Friendly! </h1>
+<p>Pillage weak listings using <b>OpenAI + Keepa</b>, forging war-ready Amazon pages from single ASINs or full raid batches</p>
 """
         )
 
