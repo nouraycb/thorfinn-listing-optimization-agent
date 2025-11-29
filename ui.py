@@ -191,8 +191,8 @@ with gr.Blocks(
     with gr.Column(elem_id="main-header"):
         gr.Markdown(
             """
-<h1>🧠 I am a a 1,000-year-old Viking reborn as an Amazon listing optimization general | Rufus-Friendly! </h1>
-<p>Pillage weak listings using <b>OpenAI + Keepa</b>, forging war-ready Amazon pages from single ASINs or full raid batches</p>
+<h1>🧠 THORFINN </h1>
+<p>I am a a 1,000-year-old Viking reborn as an Amazon listing optimization general. Pillaging weak listings using <b>OpenAI + Keepa</b>, forging war-ready Amazon pages from single ASINs or full raid batches</p>
 """
         )
 
