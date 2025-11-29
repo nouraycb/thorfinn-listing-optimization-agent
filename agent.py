@@ -95,15 +95,15 @@ Tasks:
 Respond in a structured, clear format.
 """
 
-    response = client.responses.create(
+    completion = client.chat.completions.create(
         model="gpt-4.1-mini",
-        input=[
+        messages=[
             {"role": "system", "content": "You are an expert Amazon listing auditor."},
             {"role": "user", "content": audit_prompt},
         ],
     )
 
-    return response.output[0].content[0].text
+    return completion.choices[0].message.content
 
 
 def rewrite_listing(title: str,
