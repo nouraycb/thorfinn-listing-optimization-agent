@@ -181,12 +181,16 @@ css = """
 
 
 # ------------ UI LAYOUT (Blocks) ------------
-with gr.Blocks(title="Amazon Listing Optimization Agent") as demo:
+with gr.Blocks(
+    title="NOUR's Amazon Listing Optimization Agent",
+    theme=theme,   # ✅ styling now belongs here
+    css=css,       # ✅ custom CSS also here
+) as demo:
     # Top header
     with gr.Column(elem_id="main-header"):
         gr.Markdown(
             """
-<h1>🧠 Amazon Listing Optimization Agent</h1>
+<h1>🧠 NOUR's Amazon Listing Optimization Agent</h1>
 <p>Audit & rewrite Amazon listings using <b>OpenAI + Keepa</b>, with support for manual input and batch ASIN/URL runs.</p>
 """
         )
@@ -382,6 +386,4 @@ if __name__ == "__main__":
         server_port=port,
         share=True,       # needed on Render so Gradio doesn't complain about localhost
         show_api=False,   # disables the buggy API schema endpoint that was throwing errors
-        theme=theme,
-        css=css,
     )
