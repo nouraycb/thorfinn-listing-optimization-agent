@@ -181,7 +181,12 @@ css = """
 
 
 # ------------ UI LAYOUT (Blocks) ------------
-with gr.Blocks(title="Amazon Listing Optimization Agent") as demo:
+# CHANGE #1: attach theme and css to Blocks instead of launch
+with gr.Blocks(
+    title="Amazon Listing Optimization Agent",
+    theme=theme,      # ✅ moved here
+    css=css,          # ✅ moved here
+) as demo:
     # Top header
     with gr.Column(elem_id="main-header"):
         gr.Markdown(
@@ -350,9 +355,10 @@ with gr.Blocks(title="Amazon Listing Optimization Agent") as demo:
 if __name__ == "__main__":
     # Render sets a PORT environment variable; default to 7860 for local runs
     port = int(os.getenv("PORT", "7860"))
+    # CHANGE #2: remove theme and css from launch (Blocks.launch in 4.44.0 doesn't accept theme)
     demo.launch(
         server_name="0.0.0.0",
         server_port=port,
-        theme=theme,
-        css=css,
+        # theme=theme,  # ❌ removed
+        # css=css,      # ❌ removed
     )
