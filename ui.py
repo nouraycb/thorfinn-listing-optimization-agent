@@ -37,10 +37,7 @@ def optimize_manual_ui(
         audit_summary=audit_text,
     )
 
-    # NEW: return a user-visible status message as well
-    status_text = "✅ Done! Listing has been audited and optimized."
-
-    return audit_text, optimized_text, status_text  # UPDATED: now returns 3 values
+    return audit_text, optimized_text
 
 
 # ------------ ASIN / URL MODE FUNCTION ------------
@@ -48,11 +45,7 @@ def optimize_from_identifiers_ui(identifiers_text, target_keywords, category, au
     # Split and clean input lines
     lines = [line.strip() for line in identifiers_text.splitlines() if line.strip()]
     if not lines:
-        # UPDATED: return both batch markdown + status
-        return (
-            "⚠️ No ASINs or URLs provided. Please add one per line.",
-            "⚠️ No identifiers were processed.",
-        )
+        return "⚠️ No ASINs or URLs provided. Please add one per line."
 
     results = []
 
@@ -117,13 +110,7 @@ def optimize_from_identifiers_ui(identifiers_text, target_keywords, category, au
 """
         results.append(block.strip())
 
-    final_markdown = "\n\n".join(results)
-
-    # NEW: batch status text
-    status_text = "✅ Done! Batch optimization complete."
-
-    # UPDATED: return both markdown and status
-    return final_markdown, status_text
+    return "\n\n".join(results)
 
 
 # ------------ EXPORT HELPERS ------------
@@ -194,17 +181,12 @@ css = """
 
 
 # ------------ UI LAYOUT (Blocks) ------------
-# theme and css attached to Blocks
-with gr.Blocks(
-    title="NOUR's Amazon Listing Optimization Agent | Rufus-Friendly",
-    theme=theme,
-    css=css,
-) as demo:
+with gr.Blocks(title="Amazon Listing Optimization Agent") as demo:
     # Top header
     with gr.Column(elem_id="main-header"):
         gr.Markdown(
             """
-<h1>🧠 NOUR's Amazon Listing Optimization Agent | Rufus-Friendly </h1>
+<h1>🧠 Amazon Listing Optimization Agent</h1>
 <p>Audit & rewrite Amazon listings using <b>OpenAI + Keepa</b>, with support for manual input and batch ASIN/URL runs.</p>
 """
         )
@@ -282,7 +264,7 @@ with gr.Blocks(
                     file_types=[".txt"],
                 )
 
-        # UPDATED: manual button now shows "Processing..." then updates results + status
+        # NEW: show loading + done messages without touching the core function
         manual_button.click(
             fn=lambda: "⏳ Processing… this may take a few seconds.",
             outputs=[manual_status_output],
@@ -297,8 +279,11 @@ with gr.Blocks(
                 category_input,
                 audience_input,
             ],
-            outputs=[manual_audit_output, manual_optimized_output, manual_status_output],
+            outputs=[manual_audit_output, manual_optimized_output],
             show_progress=True,
+        ).then(
+            fn=lambda: "✅ Done! Listing has been audited and optimized.",
+            outputs=[manual_status_output],
         )
 
         manual_export_button.click(
@@ -362,7 +347,7 @@ with gr.Blocks(
                     file_types=[".txt"],
                 )
 
-        # UPDATED: batch button now shows "Processing..." then updates results + status
+        # NEW: show loading + done messages for batch
         batch_button.click(
             fn=lambda: "⏳ Processing batch… this may take a little while depending on how many ASINs you entered.",
             outputs=[batch_status_output],
@@ -374,8 +359,11 @@ with gr.Blocks(
                 category_batch,
                 audience_batch,
             ],
-            outputs=[batch_output, batch_status_output],
+            outputs=[batch_output],
             show_progress=True,
+        ).then(
+            fn=lambda: "✅ Done! Batch optimization complete.",
+            outputs=[batch_status_output],
         )
 
         batch_export_button.click(
@@ -394,4 +382,6 @@ if __name__ == "__main__":
         server_port=port,
         share=True,       # needed on Render so Gradio doesn't complain about localhost
         show_api=False,   # disables the buggy API schema endpoint that was throwing errors
+        theme=theme,
+        css=css,
     )
