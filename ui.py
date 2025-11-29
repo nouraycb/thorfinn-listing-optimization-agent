@@ -181,16 +181,17 @@ css = """
 
 
 # ------------ UI LAYOUT (Blocks) ------------
+# CHANGE #1: attach theme and css to Blocks instead of launch
 with gr.Blocks(
-    title="NOUR's Amazon Listing Optimization Agent",
-    theme=theme,   # ✅ styling now belongs here
-    css=css,       # ✅ custom CSS also here
+    title="NOUR's Amazon Listing Optimization Agent | Rufus-Friendly",
+    theme=theme,      # ✅ moved here
+    css=css,          # ✅ moved here
 ) as demo:
     # Top header
     with gr.Column(elem_id="main-header"):
         gr.Markdown(
             """
-<h1>🧠 NOUR's Amazon Listing Optimization Agent</h1>
+<h1>🧠 NOUR's Amazon Listing Optimization Agent | Rufus-Friendly </h1>
 <p>Audit & rewrite Amazon listings using <b>OpenAI + Keepa</b>, with support for manual input and batch ASIN/URL runs.</p>
 """
         )
@@ -254,11 +255,6 @@ with gr.Blocks(
                             value="Run an optimization to see the improved copy here."
                         )
 
-                # NEW: status line for manual mode
-                manual_status_output = gr.Markdown(
-                    value="💤 Idle – click 'Optimize Listing' to start."
-                )
-
                 gr.Markdown("---")
                 gr.Markdown("#### 📥 Export Manual Result")
 
@@ -268,11 +264,7 @@ with gr.Blocks(
                     file_types=[".txt"],
                 )
 
-        # NEW: show loading + done messages without touching the core function
         manual_button.click(
-            fn=lambda: "⏳ Processing… this may take a few seconds.",
-            outputs=[manual_status_output],
-        ).then(
             fn=optimize_manual_ui,
             inputs=[
                 title_input,
@@ -284,10 +276,6 @@ with gr.Blocks(
                 audience_input,
             ],
             outputs=[manual_audit_output, manual_optimized_output],
-            show_progress=True,
-        ).then(
-            fn=lambda: "✅ Done! Listing has been audited and optimized.",
-            outputs=[manual_status_output],
         )
 
         manual_export_button.click(
@@ -337,11 +325,6 @@ with gr.Blocks(
                     value="Results for each ASIN will appear here as sections."
                 )
 
-                # NEW: status line for batch mode
-                batch_status_output = gr.Markdown(
-                    value="💤 Idle – click 'Fetch via Keepa & Optimize' to start."
-                )
-
                 gr.Markdown("---")
                 gr.Markdown("#### 📥 Export Batch Results")
 
@@ -351,11 +334,7 @@ with gr.Blocks(
                     file_types=[".txt"],
                 )
 
-        # NEW: show loading + done messages for batch
         batch_button.click(
-            fn=lambda: "⏳ Processing batch… this may take a little while depending on how many ASINs you entered.",
-            outputs=[batch_status_output],
-        ).then(
             fn=optimize_from_identifiers_ui,
             inputs=[
                 ids_input,
@@ -364,10 +343,6 @@ with gr.Blocks(
                 audience_batch,
             ],
             outputs=[batch_output],
-            show_progress=True,
-        ).then(
-            fn=lambda: "✅ Done! Batch optimization complete.",
-            outputs=[batch_status_output],
         )
 
         batch_export_button.click(
