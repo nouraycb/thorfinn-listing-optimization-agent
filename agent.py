@@ -145,15 +145,16 @@ Use the AUDIT SUMMARY as your improvement plan.
 Now output the final optimized content in the exact format specified in the system prompt.
 """
 
-    response = client.responses.create(
+    # ✅ Use SYSTEM_PROMPT and the correct variable rewrite_prompt
+    response = client.chat.completions.create(
         model="gpt-4.1-mini",
-        input=[
+        messages=[
             {"role": "system", "content": SYSTEM_PROMPT},
             {"role": "user", "content": rewrite_prompt},
         ],
     )
 
-    return response.output[0].content[0].text
+    return response.choices[0].message.content
 
 
 def run_agent():
