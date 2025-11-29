@@ -1,6 +1,10 @@
 import os
 from dotenv import load_dotenv
+import openai
 from openai import OpenAI
+
+# Print OpenAI version so we can see it in Render logs
+print("DEBUG: OPENAI VERSION:", openai.__version__, flush=True)
 
 # Load environment variables from .env (useful locally)
 load_dotenv()
